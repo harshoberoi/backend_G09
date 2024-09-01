@@ -1,0 +1,269 @@
+Microsoft Windows [Version 10.0.22631.4037]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HARMANJEET SINGH>mongosh
+Current Mongosh Log ID: 66d142428d512cbd6a2710bb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.0
+Using MongoDB:          7.0.14
+Using Mongosh:          2.3.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-08-28T10:19:38.620+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use newDatabase
+switched to db newDatabase
+newDatabase> db.user.countDocuments()
+8
+newDatabase> db.user.estimatedDocumentCount()
+8
+newDatabase> db.user.countDocuments({name:"Arjan"})
+0
+newDatabase> db.user.countDocuments({name:"Arjan Dhillon"})
+2
+newDatabase> db.faculity.updateMany({}, { $set:{subject:"DataScience"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+newDatabase> db.faculity.updateMany({} , {$set:{address: "Chitkara"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+newDatabase> db.student.updateMany({marks:{$gte:80 , $lte:90}},{$set : {Grade:"A"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+newDatabase> db.Student.updateMany({marks:{$gte:80 , $lte:90}},{$set : {Grade:"A"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+newDatabase> db.Student.updateMany({marks:{$gte:90}},{$set : {Grade:"A+"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+newDatabase> db.Student.updateMany({marks:{$gte:65 , $lte:80}},{$set : {Grade:"B"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+newDatabase> db.Student.updateMany({marks:{$gte:40 , $lte:65}},{$set : {Grade:"c"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+newDatabase> db.student.find({marks:{$gte:80 }} && {age:{$gte:18}})
+
+newDatabase> db.student.find(
+...   { age: { $eq: 22 }, marks: { $eq: 90 } },  // Use $eq to match age = 22 and marks = 90
+...   { _id: 0, date: 1 }                        // Projection to include only the 'date' field and exclude '_id'
+...   { _id: 0, date: 1 }                        // Projection to include only the 'date' field and exclude '_id'
+newDatabase> db.student.find(
+...   { age: { $eq: 22 }, marks: { $eq: 90 } },  // Use $eq to match age = 22 and marks = 90
+...   { _id: 0, date: 1 }                        // Projection to include only the 'date' field and exclude '_id'
+... )
+
+newDatabase> db.Student.find({marks:90 , age:22})
+
+newDatabase> db.Student.find({marks:78 , age:20})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c9'),
+    name: 'Honey',
+    age: 20,
+    marks: 78,
+    Grade: 'B'
+  }
+]
+newDatabase> db.Student.find({marks:{$get:80}} ,{age:{$get:18}})
+MongoServerError[BadValue]: unknown operator: $get
+newDatabase> db.Student.find({marks:{$gte:80}} ,{age:{$gte:18}})
+MongoServerError[Location16020]: Expression $gte takes exactly 2 arguments. 1 were passed in.
+newDatabase> db.Student.find({marks:{$gte:80}} && {age:{$gte:18}})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c7'),
+    name: 'Hindveer',
+    age: 22,
+    marks: 85,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c8'),
+    name: 'Harmeet',
+    age: 24,
+    marks: 92,
+    Grade: 'A+'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c9'),
+    name: 'Honey',
+    age: 20,
+    marks: 78,
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710ca'),
+    name: 'Harman',
+    age: 23,
+    marks: 64,
+    Grade: 'c'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710cb'),
+    name: 'spiddy',
+    age: 21,
+    marks: 88,
+    Grade: 'A'
+  }
+]
+newDatabase> db.Student.find({marks:{$gte:80} , {age:{$gte:18}})
+Uncaught:
+SyntaxError: Unexpected token (1:35)
+
+> 1 | db.Student.find({marks:{$gte:80} , {age:{$gte:18}})
+    |                                    ^
+  2 |
+
+newDatabase> db.Student.find({marks:{$gte:80} , age:{$gte:18}})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c7'),
+    name: 'Hindveer',
+    age: 22,
+    marks: 85,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c8'),
+    name: 'Harmeet',
+    age: 24,
+    marks: 92,
+    Grade: 'A+'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710cb'),
+    name: 'spiddy',
+    age: 21,
+    marks: 88,
+    Grade: 'A'
+  }
+]
+newDatabase> db.Student.find({Grade:"A"})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c7'),
+    name: 'Hindveer',
+    age: 22,
+    marks: 85,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710cb'),
+    name: 'spiddy',
+    age: 21,
+    marks: 88,
+    Grade: 'A'
+  }
+]
+newDatabase> db.Student.find({ $and:[{age:{$get:18}}, {marks:{$gte:80}}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:59)
+
+> 1 | db.Student.find({ $and:[{age:{$get:18}}, {marks:{$gte:80}}])
+    |                                                            ^
+  2 |
+
+newDatabase> db.Student.find({ $and:[{age:{$get:18}}, {marks:{$gte:80}}]})
+MongoServerError[BadValue]: unknown operator: $get
+newDatabase> db.Student.find({ $and:[{age:{$gte:18}}, {marks:{$gte:80}}]})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c7'),
+    name: 'Hindveer',
+    age: 22,
+    marks: 85,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c8'),
+    name: 'Harmeet',
+    age: 24,
+    marks: 92,
+    Grade: 'A+'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710cb'),
+    name: 'spiddy',
+    age: 21,
+    marks: 88,
+    Grade: 'A'
+  }
+]
+newDatabase> db.Student.find({ $or:[{age:{$gte:18}}, {marks:{$gte:80}}]})
+[
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c7'),
+    name: 'Hindveer',
+    age: 22,
+    marks: 85,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c8'),
+    name: 'Harmeet',
+    age: 24,
+    marks: 92,
+    Grade: 'A+'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710c9'),
+    name: 'Honey',
+    age: 20,
+    marks: 78,
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710ca'),
+    name: 'Harman',
+    age: 23,
+    marks: 64,
+    Grade: 'c'
+  },
+  {
+    _id: ObjectId('66cebf1adf471c1c232710cb'),
+    name: 'spiddy',
+    age: 21,
+    marks: 88,
+    Grade: 'A'
+  }
+]
+newDatabase>
